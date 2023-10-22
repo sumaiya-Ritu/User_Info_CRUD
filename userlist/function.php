@@ -45,3 +45,39 @@ function getuserList()
         return json_encode($data);
     }
 }
+
+//error422 fucntion declaration
+function error422($message){
+
+    $data = [
+        'status' => 422,
+        'message' => $message,
+    ];
+    header("http/1.0 422 Entity not found");
+    return json_encode($data);
+    exit();
+}
+
+//declarion the get users for single id call
+function getusers($userparams)  {
+    global $conn;
+
+    if($userparams['id'] == null){
+
+        return error422('Enter your user ID');
+    }
+}
+
+function error22($message){
+
+    $data = [
+        'status' => 422,
+        'message' => $message,
+    ];
+    header("http/1.0 422 Entity not found");
+    return json_encode($data);
+    exit();
+}
+
+
+?>
