@@ -22,7 +22,7 @@ function getuserList()
                 'message' => 'User list fetched successfully',
                 'data'=> $res, //sending data in response
             ];
-            header("http/1.0 404 User list fetched successfully");
+            header("http/1.0 200 User list fetched successfully");
             return json_encode($data);
         } else {
 
@@ -84,7 +84,7 @@ if(mysqli_num_rows($result) == 1){
         'message' => 'User Fetched successfully',
         'data' => $res,
     ];
-    header("http/1.0 200 User Fetched successfully");
+    header("http/1.0 200 Ok");
     return json_encode($data);
 
 }else{
