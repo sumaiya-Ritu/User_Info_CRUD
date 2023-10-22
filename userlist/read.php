@@ -10,7 +10,18 @@ include('function.php');
 
 if ($requestMethod == "GET") {
 
-    $userList = getuserList();
+    //single id call
+    //isset function clarifies whether the id is set or not
+    if (isset($_GET['id'])) {
+$users = getusers($_GET);
+echo $users;
+
+    } else {
+        $userList = getuserList(); //for showing userlsit
+        echo $userList;
+    }
+
+    $userList = getuserList(); //for showing userlsit
     echo $userList;
 } else {
 
