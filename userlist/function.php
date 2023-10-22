@@ -66,18 +66,13 @@ function getusers($userparams)  {
 
         return error422('Enter your user ID');
     }
+$userID = mysqli_real_escape_string($conn,$userparams['id']); //passing the user id parameter in user id function
+
+
+
 }
 
-function error22($message){
 
-    $data = [
-        'status' => 422,
-        'message' => $message,
-    ];
-    header("http/1.0 422 Entity not found");
-    return json_encode($data);
-    exit();
-}
 
 
 ?>
