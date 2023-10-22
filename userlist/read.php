@@ -21,8 +21,8 @@ echo $users;
         echo $userList;
     }
 
-    $userList = getuserList(); //for showing userlsit
-    echo $userList;
+    // $userList = getuserList(); //for showing userlsit
+    // echo $userList;
 } else {
 
     $data = [

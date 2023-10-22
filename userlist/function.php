@@ -37,11 +37,11 @@ function getuserList()
     } else {
 
         $data = [
-            'status' => 505,
+            'status' => 500,
             'message' => 'Internal Server Error',
         ];
 
-        header("http/1.0 505 Internal Server Error");
+        header("http/1.0 500 Internal Server Error");
         return json_encode($data);
     }
 }
@@ -68,11 +68,47 @@ function getusers($userparams)  {
     }
 $userID = mysqli_real_escape_string($conn,$userparams['id']); //passing the user id parameter in user id function
 
+$query = "SELECT * FROM users WHERE id = '$userID' LIMIT 1";
+$result = mysqli_query($conn,$query);
 
+if($result){
+
+    //for checking 1 record at a time
+if(mysqli_num_rows($result) == 1){
+
+    $res = mysqli_fetch_assoc($result);
+
+    $data = [
+
+        'status'=> 200,
+        'message' => 'User Fetched successfully',
+        'data' => $res,
+    ];
+    header("http/1.0 200 User Fetched successfully");
+    return json_encode($data);
+
+}else{
+    $data = [
+        'status' => 404,
+        'message' => 'No user Found',
+    ];
+
+    header("http/1.0 404 No user Found");
+    return json_encode($data);
 
 }
 
 
+}else{
+    $data = [
+        'status' => 500,
+        'message' => 'Internal Server Error',
+    ];
+
+    header("http/1.0 500 Internal Server Error");
+    return json_encode($data);
+
+}
 
 
-?>
+}
