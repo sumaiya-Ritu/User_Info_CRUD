@@ -12,6 +12,7 @@ if ($requestMethod == "GET") {
 
     //single id call
     //isset function clarifies whether the id is set or not
+    
     if (isset($_GET['id'])) {
         $users = getusers($_GET);
         echo $users;
@@ -30,5 +31,6 @@ if ($requestMethod == "GET") {
     ];
 
     header("http/1.0 405 Method Not Allowed");
-    echo json_encode($data);
+    echo json_encode($data); 
+    //json_encode turns php format to json format
 }
