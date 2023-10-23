@@ -17,6 +17,7 @@ if ($requestMethod == "GET") {
         $users = getusers($_GET);
         echo $users;
     } else {
+        
         $userList = getuserList(); //for showing userlsit
         echo $userList;
     }

@@ -84,7 +84,7 @@ if(mysqli_num_rows($result) == 1){
         'message' => 'User Fetched successfully',
         'data' => $res,
     ];
-    header("http/1.0 200 Ok");
+    header("http/1.0 200 User Ok");
     return json_encode($data);
 
 }else{
