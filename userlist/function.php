@@ -16,7 +16,8 @@ function getuserList()
 
         if (mysqli_num_rows($query_run) > 0) {
 
-            $res = mysqli_fetch_all($query_run, MYSQLI_ASSOC);
+            $res = mysqli_fetch_all($query_run, MYSQLI_ASSOC); //input not valid - user parameter strip - httml decode sanitize - body html content - input sanitize is important. - to prevent script execution
+
             $data = [
                 'status' => 200,
                 'message' => 'User list fetched successfully',
@@ -47,7 +48,7 @@ function getuserList()
 }
 
 //error422 fucntion declaration
-function error422($message)
+function error422($message)  //403/authorize can be applied
 {
 
     $data = [
@@ -71,7 +72,7 @@ function getusers($userparams)
     
     $userID = mysqli_real_escape_string($conn, $userparams['id']); //passing the user id parameter in user id function
 
-    $query = "SELECT * FROM users WHERE id = '$userID' LIMIT 1";
+    $query = "SELECT * FROM users WHERE id = '$userID' LIMIT 1"; //can use index here too to not use limit 
     $result = mysqli_query($conn, $query);
 
     if ($result) {
@@ -108,3 +109,5 @@ function getusers($userparams)
         return json_encode($data);
     }
 }
+
+
