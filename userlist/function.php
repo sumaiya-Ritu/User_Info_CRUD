@@ -69,7 +69,7 @@ function getusers($userparams)
 
         return error422('Enter your user ID');
     }
-    
+
     $userID = mysqli_real_escape_string($conn, $userparams['id']); //passing the user id parameter in user id function
 
     $query = "SELECT * FROM users WHERE id = '$userID' LIMIT 1"; //can use index here too to not use limit 
@@ -110,75 +110,41 @@ function getusers($userparams)
     }
 }
 
- //storing user function 
+//storing user function 
 
- function storeUserinfo($userInput){
-
+function storeUserinfo($userInput)
+{
     global $conn;
- $User_name = mysqli_real_escape_string($conn,$userInput['User_name']);
- $First_name = mysqli_real_escape_string($conn,$userInput['First_name']);
- $Last_name = mysqli_real_escape_string($conn,$userInput['Last_name']);
- $Email = mysqli_real_escape_string($conn,$userInput['Email']);
- $Phone = mysqli_real_escape_string($conn,$userInput['Phone']);
- $Address = mysqli_real_escape_string($conn,$userInput['Address']);
 
- if(empty(trim($User_name))){
-
- return error422('ENTER YOUR User_name:');
-
- } elseif(empty(trim($First_name))){
-
-    return error422('ENTER YOUR First_name:');
-
- }elseif(empty(trim($Last_name))){
-
-    return error422('ENTER YOUR Last_name:');
-
- }elseif(empty(trim($Email))){
-
-    return error422('ENTER YOUR Email:');
-
- }elseif(empty(trim($Phone))){
-
-    return error422('ENTER YOUR Phone:');
-
- }elseif(empty(trim($Address))){
-
-    return error422('ENTER YOUR Address:');
-
- }else {
- $query = "INSERT INTO users (User_name,First_name,Last_name,Email,Phone,Address) VALUES ('$User_name','$First_name','$Last_name','$Email','$Phone','$Address')";
-
-    $result = mysqli_query($conn,$query);
-  if($result){
-
-    $data = [
-        'status' => 201,
-        'message' => 'Created Successfully',
-    ];
-
-    header("http/1.0 200 Created");
-    return json_encode($data);
+    $User_name = trim(mysqli_real_escape_string($conn, $userInput['User_name']));
+    $First_name = trim(mysqli_real_escape_string($conn, $userInput['First_name']));
+    $Last_name = trim(mysqli_real_escape_string($conn, $userInput['Last_name']));
+    $Email = trim(mysqli_real_escape_string($conn, $userInput['Email']));
+    $Phone = trim(mysqli_real_escape_string($conn, $userInput['Phone']));
+    $Address = trim(mysqli_real_escape_string($conn, $userInput['Address']));
 
 
-  }else{
-    $data = [
-        'status' => 500,
-        'message' => 'Internal Server Error',
-    ];
+    if (empty(trim($User_name)) || empty(trim($First_name)) || empty(trim($Last_name)) || empty(trim($Email)) || empty(trim($Phone)) || empty(trim($Address))) {
+        return error422('Please fill in all required fields.');
+    } else {
+        $query = "INSERT INTO users (User_name, First_name, Last_name, Email, Phone, Address) VALUES ('$User_name', '$First_name', '$Last_name', '$Email', '$Phone', '$Address')";
 
-    header("http/1.0 500 Internal Server Error");
-    return json_encode($data);
-  }
+        $result = mysqli_query($conn, $query);
 
-
-
- }
-
+        if ($result) {
+            $data = [
+                'status' => 201,
+                'message' => 'User Created Successfully',
+            ];
+            header("HTTP/1.0 201 Created");
+            return json_encode($data);
+        } else {
+            $data = [
+                'status' => 500,
+                'message' => 'Internal Server Error',
+            ];
+            header("HTTP/1.0 500 Internal Server Error");
+            return json_encode($data);
+        }
+    }
 }
-
-
-
-?>
-
-
