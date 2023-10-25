@@ -110,4 +110,75 @@ function getusers($userparams)
     }
 }
 
+ //storing user function 
+
+ function storeUserinfo($userInput){
+
+    global $conn;
+ $User_name = mysqli_real_escape_string($conn,$userInput['User_name']);
+ $First_name = mysqli_real_escape_string($conn,$userInput['First_name']);
+ $Last_name = mysqli_real_escape_string($conn,$userInput['Last_name']);
+ $Email = mysqli_real_escape_string($conn,$userInput['Email']);
+ $Phone = mysqli_real_escape_string($conn,$userInput['Phone']);
+ $Address = mysqli_real_escape_string($conn,$userInput['Address']);
+
+ if(empty(trim($User_name))){
+
+ return error422('ENTER YOUR User_name:');
+
+ } elseif(empty(trim($First_name))){
+
+    return error422('ENTER YOUR First_name:');
+
+ }elseif(empty(trim($Last_name))){
+
+    return error422('ENTER YOUR Last_name:');
+
+ }elseif(empty(trim($Email))){
+
+    return error422('ENTER YOUR Email:');
+
+ }elseif(empty(trim($Phone))){
+
+    return error422('ENTER YOUR Phone:');
+
+ }elseif(empty(trim($Address))){
+
+    return error422('ENTER YOUR Address:');
+
+ }else {
+ $query = "INSERT INTO users (User_name,First_name,Last_name,Email,Phone,Address) VALUES ('$User_name','$First_name','$Last_name','$Email','$Phone','$Address')";
+
+    $result = mysqli_query($conn,$query);
+  if($result){
+
+    $data = [
+        'status' => 201,
+        'message' => 'Created Successfully',
+    ];
+
+    header("http/1.0 200 Created");
+    return json_encode($data);
+
+
+  }else{
+    $data = [
+        'status' => 500,
+        'message' => 'Internal Server Error',
+    ];
+
+    header("http/1.0 500 Internal Server Error");
+    return json_encode($data);
+  }
+
+
+
+ }
+
+}
+
+
+
+?>
+
 
