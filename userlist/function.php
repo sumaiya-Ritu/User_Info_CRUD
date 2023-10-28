@@ -1,6 +1,8 @@
 <?php
 
 require '../index/dbcon.php';
+// include('create.php');
+
 //conncetion database
 
 //declaring getuserlist fucntion
@@ -116,22 +118,23 @@ function storeUserinfo($userInput)
 {
     global $conn;
 
-    $User_name = trim(mysqli_real_escape_string($conn, $userInput['User_name']));
-    $First_name = trim(mysqli_real_escape_string($conn, $userInput['First_name']));
-    $Last_name = trim(mysqli_real_escape_string($conn, $userInput['Last_name']));
-    $Email = trim(mysqli_real_escape_string($conn, $userInput['Email']));
-    $Phone = trim(mysqli_real_escape_string($conn, $userInput['Phone']));
-    $Address = trim(mysqli_real_escape_string($conn, $userInput['Address']));
+     $User_name = mysqli_real_escape_string($conn, $userInput['User_name']);
+    $First_name = mysqli_real_escape_string($conn, $userInput['First_name']);
+    $Last_name = mysqli_real_escape_string($conn, $userInput['Last_name']);
+    $Email = mysqli_real_escape_string($conn, $userInput['Email']);
+    $Phone = mysqli_real_escape_string($conn, $userInput['Phone']);
+    $Address = mysqli_real_escape_string($conn, $userInput['Address']);
+   
+    // console. log($User_name,$First_name,$Last_name,$Email,$Phone,$Address); 
 
-
-    if (empty(trim($User_name)) || empty(trim($First_name)) || empty(trim($Last_name)) || empty(trim($Email)) || empty(trim($Phone)) || empty(trim($Address))) {
+    if (empty($User_name) || empty($First_name) || empty($Last_name) || empty($Email) || empty($Phone) || empty($Address)) {
         return error422('Please fill in all required fields.');
     } else {
         $query = "INSERT INTO users (User_name, First_name, Last_name, Email, Phone, Address) VALUES ('$User_name', '$First_name', '$Last_name', '$Email', '$Phone', '$Address')";
 
-        $result = mysqli_query($conn, $query);
+        $create = mysqli_query($conn, $query);
 
-        if ($result) {
+        if ($create) {
             $data = [
                 'status' => 201,
                 'message' => 'User Created Successfully',
