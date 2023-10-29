@@ -4,7 +4,7 @@
 
 header('Access-Control-Allow-origin:*');
 header('Content-Type: application/json');
-header('Access-Control-Allow-Method: POST');
+header('Access-Control-Allow-Method: PUT');
 header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers,Authorization,X-Request-With');
 
 
@@ -13,21 +13,21 @@ include('function.php');
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 
 
-if ($requestMethod == 'POST') {
+if ($requestMethod == 'PUT') {
 
 
-    $inputData = json_decode(file_get_contents("php://input"), true); //sending data in array format > true. false > object format 
+    $inputData = json_decode(file_get_contents("php://input"), true);  
 
     if (empty($inputData)) {
 
-        $storeUserinfo = storeUserinfo($_POST); //form data value passing via post
+        $UpdateUser = UpdateUser($_POST,$_GET); //form data value passing via post //sending one parameter as id  and post for form type data
 
 
     } else {
 
-        $storeUserinfo = storeUserinfo($inputData);
+        $UpdateUser = UpdateUser($inputData,$_GET);
     }
-    echo $storeUserinfo;
+    echo $UpdateUser;
 } else {
 
     $data = [

@@ -118,14 +118,13 @@ function storeUserinfo($userInput)
 {
     global $conn;
 
-     $User_name = mysqli_real_escape_string($conn, $userInput['User_name']);
+    $User_name = mysqli_real_escape_string($conn, $userInput['User_name']);
     $First_name = mysqli_real_escape_string($conn, $userInput['First_name']);
     $Last_name = mysqli_real_escape_string($conn, $userInput['Last_name']);
     $Email = mysqli_real_escape_string($conn, $userInput['Email']);
     $Phone = mysqli_real_escape_string($conn, $userInput['Phone']);
     $Address = mysqli_real_escape_string($conn, $userInput['Address']);
-   
-    // console. log($User_name,$First_name,$Last_name,$Email,$Phone,$Address); 
+    //console. log($User_name,$First_name,$Last_name,$Email,$Phone,$Address); 
 
     if (empty($User_name) || empty($First_name) || empty($Last_name) || empty($Email) || empty($Phone) || empty($Address)) {
         return error422('Please fill in all required fields.');
@@ -150,4 +149,65 @@ function storeUserinfo($userInput)
             return json_encode($data);
         }
     }
+}
+
+//update user infor function
+
+function UpdateUser($userInput, $userparams)
+{
+    global $conn;
+
+    if (!isset($userparams['id'])) {
+        return error422('User ID not found');
+    } else {
+
+        return error422('Enter the User ID:');
+    }
+
+    $userID = mysqli_real_escape_string($conn,$userparams['id']);
+    $User_name = mysqli_real_escape_string($conn, $userInput['User_name']);
+    $First_name = mysqli_real_escape_string($conn, $userInput['First_name']);
+    $Last_name = mysqli_real_escape_string($conn, $userInput['Last_name']);
+    $Email = mysqli_real_escape_string($conn, $userInput['Email']);
+    $Phone = mysqli_real_escape_string($conn, $userInput['Phone']);
+    $Address = mysqli_real_escape_string($conn, $userInput['Address']);
+
+    if(empty(trim($User_name))){
+        return error422('Enter your User_name:');
+    } elseif(empty(trim($First_name))){
+        return error422('Enter your First_name:');
+    }else if(empty(trim($Last_name))){
+        return error422('Enter your Last_name:');
+    }else if(empty(trim($Email))){
+        return error422('Enter your Email:');
+    } else if(empty(trim($Phone))){
+        return error422('Enter your Phone:');
+    }else if (empty(trim($Address))){
+        return error422('Enter your Address:');
+    }
+    else 
+    {
+     $query = "UPDATE users SET User_name= '$User_name',First_name='$First_name',Last_name='$Last_name',Email='$Email',Phone='$Phone',Address='$Address' WHERE id = '$userID' LIMIT 1 ";
+
+     $updateUser = mysqli_query($conn,$query);
+
+     if ($updateUser){
+        $data = [
+            'status' => 200,
+            'message' => 'User updated',
+        ];
+        header("HTTP/1.0 200 User updated");
+            return json_encode($data);
+     } else{
+        $data = [
+            'status' => 500,
+            'message' => 'Internal Server Error',
+        ];
+        header("HTTP/1.0 500 Internal Server Error");
+        return json_encode($data);
+     }
+
+    }
+
+
 }
