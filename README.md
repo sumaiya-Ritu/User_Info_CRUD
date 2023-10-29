@@ -14,7 +14,7 @@ http://localhost/User-info/userlist/create.php<br>
 
 taks four - update user - <br>
 Local server API - <br> 
-http://localhost/User-info/userlist/update.php<br>
+http://localhost/User-info/userlist/update.php?id=<br>
 
 taks five - delete user - <br>
 Local server API - <br> 
