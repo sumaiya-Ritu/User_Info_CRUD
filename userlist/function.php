@@ -159,12 +159,12 @@ function UpdateUser($userInput, $userparams)
 
     if (!isset($userparams['id'])) {
         return error422('User ID not found');
-    } elseif($userparams['id'] == null) {
+    } elseif ($userparams['id'] == null) {
 
         return error422('Enter the User ID:');
     }
 
-    $userID = mysqli_real_escape_string($conn,$userparams['id']);
+    $userID = mysqli_real_escape_string($conn, $userparams['id']);
     $User_name = mysqli_real_escape_string($conn, $userInput['User_name']);
     $Frist_name = mysqli_real_escape_string($conn, $userInput['Frist_name']);
     $Last_name = mysqli_real_escape_string($conn, $userInput['Last_name']);
@@ -172,42 +172,79 @@ function UpdateUser($userInput, $userparams)
     $Phone = mysqli_real_escape_string($conn, $userInput['Phone']);
     $Address = mysqli_real_escape_string($conn, $userInput['Address']);
 
-    if(empty(trim($User_name))){
+    if (empty(trim($User_name))) {
         return error422('Enter your User_name:');
-    } elseif(empty(trim($Frist_name))){
+    } elseif (empty(trim($Frist_name))) {
         return error422('Enter your Frist_name:');
-    }else if(empty(trim($Last_name))){
+    } else if (empty(trim($Last_name))) {
         return error422('Enter your Last_name:');
-    }else if(empty(trim($Email))){
+    } else if (empty(trim($Email))) {
         return error422('Enter your Email:');
-    } else if(empty(trim($Phone))){
+    } else if (empty(trim($Phone))) {
         return error422('Enter your Phone:');
-    }else if (empty(trim($Address))){
+    } else if (empty(trim($Address))) {
         return error422('Enter your Address:');
+    } else {
+        $query = "UPDATE users SET User_name= '$User_name',Frist_name='$Frist_name',Last_name='$Last_name',Email='$Email',Phone='$Phone',Address='$Address' WHERE id = '$userID' LIMIT 1 ";
+
+        $updateUser = mysqli_query($conn, $query);
+
+        if ($updateUser) {
+            $data = [
+                'status' => 200,
+                'message' => 'User updated',
+            ];
+            header("HTTP/1.0 200 User updated");
+            return json_encode($data);
+        } else {
+            $data = [
+                'status' => 500,
+                'message' => 'Internal Server Error',
+            ];
+            header("HTTP/1.0 500 Internal Server Error");
+            return json_encode($data);
+        }
     }
-    else 
-    {
-     $query = "UPDATE users SET User_name= '$User_name',Frist_name='$Frist_name',Last_name='$Last_name',Email='$Email',Phone='$Phone',Address='$Address' WHERE id = '$userID' LIMIT 1 ";
+}
 
-     $updateUser = mysqli_query($conn,$query);
+//delete user
 
-     if ($updateUser){
+function deleteUser($userparams)
+{
+
+    global $conn;
+
+    if (!isset($userparams['id'])) {  //checking for user id here 
+        return error422('User ID not found');
+    } elseif ($userparams['id'] == null) {
+
+        return error422('Enter the User ID:');
+    }
+
+    $userID = mysqli_real_escape_string($conn, $userparams['id']);
+
+    $query = "DELETE FROM users WHERE id='$userID' LIMIT 1";
+    $deleteUser = mysqli_query($conn, $query);
+
+    if($deleteUser){
         $data = [
             'status' => 200,
-            'message' => 'User updated',
+            'message' => 'User deleted successfully',
         ];
-        header("HTTP/1.0 200 User updated");
-            return json_encode($data);
-     } else{
-        $data = [
-            'status' => 500,
-            'message' => 'Internal Server Error',
-        ];
-        header("HTTP/1.0 500 Internal Server Error");
+        header("HTTP/1.0 200 Deleted"); 
         return json_encode($data);
-     }
 
+
+    }else{
+
+        $data = [
+            'status' => 404,
+            'message' => 'User not found',
+        ];
+        header("HTTP/1.0 404 User not found");
+        return json_encode($data);
     }
+
 
 
 }
