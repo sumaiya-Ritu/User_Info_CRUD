@@ -159,7 +159,7 @@ function UpdateUser($userInput, $userparams)
 
     if (!isset($userparams['id'])) {
         return error422('User ID not found');
-    } else {
+    } elseif($userparams['id'] == null) {
 
         return error422('Enter the User ID:');
     }
