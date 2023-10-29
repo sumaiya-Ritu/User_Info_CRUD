@@ -7,3 +7,16 @@ http://localhost/User-info/userlist/read.php <br>
 task two - call single user id - <br>
 Local server API - <br> 
 http://localhost/User-info/userlist/read.php?id=1
+
+taks three - create user - <br>
+Local server API - <br> 
+http://localhost/User-info/userlist/create.php<br>
+
+taks four - update user - <br>
+Local server API - <br> 
+http://localhost/User-info/userlist/update.php<br>
+
+taks five - delete user - <br>
+Local server API - <br> 
+http://localhost/User-info/userlist/delete.php?id=<br>
+
