@@ -119,17 +119,17 @@ function storeUserinfo($userInput)
     global $conn;
 
     $User_name = mysqli_real_escape_string($conn, $userInput['User_name']);
-    $First_name = mysqli_real_escape_string($conn, $userInput['First_name']);
+    $Frist_name = mysqli_real_escape_string($conn, $userInput['Frist_name']);
     $Last_name = mysqli_real_escape_string($conn, $userInput['Last_name']);
     $Email = mysqli_real_escape_string($conn, $userInput['Email']);
     $Phone = mysqli_real_escape_string($conn, $userInput['Phone']);
     $Address = mysqli_real_escape_string($conn, $userInput['Address']);
     //console. log($User_name,$First_name,$Last_name,$Email,$Phone,$Address); 
 
-    if (empty($User_name) || empty($First_name) || empty($Last_name) || empty($Email) || empty($Phone) || empty($Address)) {
+    if (empty($User_name) || empty($Frist_name) || empty($Last_name) || empty($Email) || empty($Phone) || empty($Address)) {
         return error422('Please fill in all required fields.');
     } else {
-        $query = "INSERT INTO users (User_name, First_name, Last_name, Email, Phone, Address) VALUES ('$User_name', '$First_name', '$Last_name', '$Email', '$Phone', '$Address')";
+        $query = "INSERT INTO users (User_name, Frist_name, Last_name, Email, Phone, Address) VALUES ('$User_name', '$Frist_name', '$Last_name', '$Email', '$Phone', '$Address')";
 
         $create = mysqli_query($conn, $query);
 
@@ -166,7 +166,7 @@ function UpdateUser($userInput, $userparams)
 
     $userID = mysqli_real_escape_string($conn,$userparams['id']);
     $User_name = mysqli_real_escape_string($conn, $userInput['User_name']);
-    $First_name = mysqli_real_escape_string($conn, $userInput['First_name']);
+    $Frist_name = mysqli_real_escape_string($conn, $userInput['Frist_name']);
     $Last_name = mysqli_real_escape_string($conn, $userInput['Last_name']);
     $Email = mysqli_real_escape_string($conn, $userInput['Email']);
     $Phone = mysqli_real_escape_string($conn, $userInput['Phone']);
@@ -174,8 +174,8 @@ function UpdateUser($userInput, $userparams)
 
     if(empty(trim($User_name))){
         return error422('Enter your User_name:');
-    } elseif(empty(trim($First_name))){
-        return error422('Enter your First_name:');
+    } elseif(empty(trim($Frist_name))){
+        return error422('Enter your Frist_name:');
     }else if(empty(trim($Last_name))){
         return error422('Enter your Last_name:');
     }else if(empty(trim($Email))){
@@ -187,7 +187,7 @@ function UpdateUser($userInput, $userparams)
     }
     else 
     {
-     $query = "UPDATE users SET User_name= '$User_name',First_name='$First_name',Last_name='$Last_name',Email='$Email',Phone='$Phone',Address='$Address' WHERE id = '$userID' LIMIT 1 ";
+     $query = "UPDATE users SET User_name= '$User_name',Frist_name='$Frist_name',Last_name='$Last_name',Email='$Email',Phone='$Phone',Address='$Address' WHERE id = '$userID' LIMIT 1 ";
 
      $updateUser = mysqli_query($conn,$query);
 
