@@ -131,9 +131,9 @@ function storeUserinfo($userInput)
     } else {
         $query = "INSERT INTO users (User_name, Frist_name, Last_name, Email, Phone, Address) VALUES ('$User_name', '$Frist_name', '$Last_name', '$Email', '$Phone', '$Address')";
 
-        $create = mysqli_query($conn, $query);
+        $createUser = mysqli_query($conn, $query);
 
-        if ($create) {
+        if ($createUser) {
             $data = [
                 'status' => 201,
                 'message' => 'User Created Successfully',
