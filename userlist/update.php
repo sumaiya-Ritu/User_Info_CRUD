@@ -16,17 +16,13 @@ $requestMethod = $_SERVER["REQUEST_METHOD"];
 if ($requestMethod == 'PUT') {
 
 
-    $inputData = json_decode(file_get_contents("php://input"), true);  
+    $inputData = json_decode(file_get_contents("php://input"), true);
 
-    if (empty($inputData)) {
+    // if (empty($inputData)) {
+    //     $UpdateUser = UpdateUser($_POST,$_GET); //form data value passing via post //sending one parameter as id  and post for form type data
+    // } 
 
-        $UpdateUser = UpdateUser($_POST,$_GET); //form data value passing via post //sending one parameter as id  and post for form type data
-
-
-    } else {
-
-        $UpdateUser = UpdateUser($inputData,$_GET);
-    }
+    $UpdateUser = UpdateUser($inputData, $_GET); //directly using raw data to update
     echo $UpdateUser;
 } else {
 
@@ -38,4 +34,3 @@ if ($requestMethod == 'PUT') {
     header("http/1.0 405 Method Not Allowed");
     echo json_encode($data);
 }
-?>
